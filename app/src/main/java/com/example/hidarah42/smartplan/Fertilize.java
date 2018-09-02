@@ -6,8 +6,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.Switch;
 
 import com.google.gson.Gson;
 
@@ -31,6 +36,7 @@ public class Fertilize extends Fragment {
     static String topikKirim = "avianaSub";
     private MqttAndroidClient client;
     private String clientId, pesan, stringFertilizeAt, stringWaterEvery;
+    private Integer harinya;
 
     public Fertilize(){}
 
@@ -43,6 +49,9 @@ public class Fertilize extends Fragment {
 
         final EditText fertilizeAt = page.findViewById(R.id.tv_fertilizeatwater);
         final ImageView imageViewFertilizeAt = page.findViewById(R.id.iv_fertilizeatyes);
+        final ImageView imageViewFertilizeEvery = page.findViewById(R.id.iv_fertilizeeveryyes);
+        final Spinner spinnerHari = page.findViewById(R.id.spinner_hari);
+        final Switch switchFertilize = page.findViewById(R.id.switch_fertilize);
 
         //MQTT
         MqttConnectOptions options = new MqttConnectOptions();
@@ -86,6 +95,41 @@ public class Fertilize extends Fragment {
             }
         });
 
+        final String[] hariArray = new String[]{
+                "Sunday", "Monday", "Tuesday",
+                "Wednesday", "Thursday", "Friday", "Saturday"
+        };
+
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getContext(), R.layout.itemlist, R.id.textviewnya, hariArray);
+        spinnerAdapter.setDropDownViewResource(R.layout.itemlist);
+        spinnerHari.setAdapter(spinnerAdapter);
+
+        spinnerHari.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) {
+                    harinya = 0;
+                } else if (position == 1) {
+                    harinya = 1;
+                } else if (position == 2) {
+                    harinya = 2;
+                } else if (position == 3) {
+                    harinya = 3;
+                } else if (position == 4) {
+                    harinya = 4;
+                } else if (position == 5) {
+                    harinya = 5;
+                } else if (position == 6) {
+                    harinya = 6;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         imageViewFertilizeAt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,6 +149,64 @@ public class Fertilize extends Fragment {
                 } catch (MqttException e) {
                     e.printStackTrace();
 
+                }
+            }
+        });
+
+        imageViewFertilizeEvery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Gson gson = new Gson();
+
+                Map<String, Integer> sensor = new HashMap<String, Integer>();
+                sensor.put("param", 8);
+                sensor.put("fertiEv", harinya);
+                String jsonnya = gson.toJson(sensor);
+                Log.d("Akhir data", jsonnya);
+
+                try {
+                    client.publish(topikKirim, jsonnya.getBytes(), 0, false);
+                    Log.d("Status", "Berhasil " + jsonnya);
+                } catch (MqttException e) {
+                    e.printStackTrace();
+
+                }
+            }
+        });
+
+        switchFertilize.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (switchFertilize.isChecked()) {
+                    Gson gson = new Gson();
+
+                    Map<String, Integer> sensor = new HashMap<String, Integer>();
+                    sensor.put("param", 5);
+                    sensor.put("toggleferti", 1);
+                    String jsonnya = gson.toJson(sensor);
+                    Log.d("Akhir data", jsonnya);
+
+                    try {
+                        client.publish(topikKirim, jsonnya.getBytes(), 0, false);
+                        Log.d("Status", "Berhasil " + jsonnya);
+                    } catch (MqttException e) {
+                        e.printStackTrace();
+                    }
+                } else if (!switchFertilize.isChecked()) {
+                    Gson gson = new Gson();
+
+                    Map<String, Integer> sensor = new HashMap<String, Integer>();
+                    sensor.put("param", 5);
+                    sensor.put("toogleferti", 0);
+                    String jsonnya = gson.toJson(sensor);
+                    Log.d("Akhir data", jsonnya);
+
+                    try {
+                        client.publish(topikKirim, jsonnya.getBytes(), 0, false);
+                        Log.d("Status", "Berhasil " + jsonnya);
+                    } catch (MqttException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });

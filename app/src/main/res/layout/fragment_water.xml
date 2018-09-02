@@ -58,7 +58,8 @@
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp">
                     <EditText
                         android:id="@+id/tv_wateratwater"
                         android:layout_width="wrap_content"
@@ -70,7 +71,8 @@
                 </RelativeLayout>
                 <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="80dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -136,7 +138,8 @@
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
 
                     <EditText
                         android:id="@+id/tv_watereverywater"
@@ -150,8 +153,8 @@
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="80dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

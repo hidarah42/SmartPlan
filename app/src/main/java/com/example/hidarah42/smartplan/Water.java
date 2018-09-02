@@ -6,8 +6,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Switch;
 
 import com.google.gson.Gson;
 
@@ -47,6 +49,8 @@ public class Water extends Fragment {
 
         final ImageView imageViewWaterAt = Page.findViewById(R.id.iv_wateratyes);
         final ImageView imageViewWaterEvery = Page.findViewById(R.id.iv_watereveryyes);
+
+        final Switch switchWater = Page.findViewById(R.id.switch_water);
 
         //MQTT
         MqttConnectOptions options = new MqttConnectOptions();
@@ -134,10 +138,45 @@ public class Water extends Fragment {
             }
         });
 
+        switchWater.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (switchWater.isChecked()) {
+                    Gson gson = new Gson();
+
+                    Map<String, Integer> sensor = new HashMap<String, Integer>();
+                    sensor.put("param", 1);
+                    sensor.put("togglewater", 1);
+                    String jsonnya = gson.toJson(sensor);
+                    Log.d("Akhir data", jsonnya);
+
+                    try {
+                        client.publish(topikKirim, jsonnya.getBytes(), 0, false);
+                        Log.d("Status", "Berhasil " + jsonnya);
+                    } catch (MqttException e) {
+                        e.printStackTrace();
+                    }
+                } else if (!switchWater.isChecked()) {
+                    Gson gson = new Gson();
+
+                    Map<String, Integer> sensor = new HashMap<String, Integer>();
+                    sensor.put("param", 1);
+                    sensor.put("tooglewater", 0);
+                    String jsonnya = gson.toJson(sensor);
+                    Log.d("Akhir data", jsonnya);
+
+                    try {
+                        client.publish(topikKirim, jsonnya.getBytes(), 0, false);
+                        Log.d("Status", "Berhasil " + jsonnya);
+                    } catch (MqttException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
         return Page;
     }
 
-    private void methonAtYes() {
 
-    }
 }

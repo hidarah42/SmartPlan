@@ -1,4 +1,13 @@
 <resources>
     <string name="app_name">SmartPlan</string>
     <string name="action_settings">Settings</string>
+    <string-array name="hari">
+        <item>Sunday</item>
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+    </string-array>
 </resources>
