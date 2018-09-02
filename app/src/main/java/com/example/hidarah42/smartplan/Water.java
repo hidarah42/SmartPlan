@@ -6,7 +6,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.EditText;
+import android.widget.ImageView;
+
+import com.google.gson.Gson;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
@@ -18,13 +21,17 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Water extends Fragment {
 
     static String MQTTHOST = "tcp://broker.hivemq.com:1883";
     static String topikNerima = "avianaPub";
     static String topikKirim = "avianaSub";
     private MqttAndroidClient client;
-    private String clientId, pesan;
+    private String clientId, pesan, stringWaterAt, stringWaterEvery;
+
 
     public Water(){}
 
@@ -35,8 +42,11 @@ public class Water extends Fragment {
         clientId = MqttClient.generateClientId();
         client = new MqttAndroidClient(getContext(), MQTTHOST, clientId);
 
-        final TextView timeHome = Page.findViewById(R.id.tv_timehome);
-        final TextView humadityHome = Page.findViewById(R.id.tv_humidityhome);
+        final EditText waterAt = Page.findViewById(R.id.tv_wateratwater);
+        final EditText waterEvery = Page.findViewById(R.id.tv_watereverywater);
+
+        final ImageView imageViewWaterAt = Page.findViewById(R.id.iv_wateratyes);
+        final ImageView imageViewWaterEvery = Page.findViewById(R.id.iv_watereveryyes);
 
         //MQTT
         MqttConnectOptions options = new MqttConnectOptions();
@@ -80,6 +90,26 @@ public class Water extends Fragment {
             }
         });
 
+        imageViewWaterAt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                stringWaterAt = waterAt.getText().toString();
+                int lala = Integer.valueOf(stringWaterAt);
+                Gson gson = new Gson();
+//                String total = "{\"param
+//                Log.d("waterAT",""+lala);
+
+                Map<String, Integer> sensor = new HashMap<>();
+                sensor.put("sensor", lala);
+                String jsonnya = gson.toJson(sensor);
+                Log.d("Akhir data", jsonnya);
+            }
+        });
+
         return Page;
+    }
+
+    private void methonAtYes() {
+
     }
 }
