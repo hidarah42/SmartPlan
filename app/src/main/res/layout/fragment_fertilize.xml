@@ -73,16 +73,9 @@
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:id="@+id/iv_fertilizeatno"
-            android:src="@mipmap/ic_launcher"
-            android:layout_marginLeft="125dp"/>
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
             android:id="@+id/iv_fertilizeatyes"
             android:src="@mipmap/ic_launcher"
-            android:layout_toRightOf="@id/iv_fertilizeatno"
-            android:layout_marginLeft="5dp"/>
+            android:layout_centerHorizontal="true" />
     </RelativeLayout>
 
 
@@ -118,16 +111,9 @@
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:id="@+id/iv_watereveryno"
-            android:src="@mipmap/ic_launcher"
-            android:layout_marginLeft="125dp"/>
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
             android:id="@+id/iv_fertilizeeveryyes"
             android:src="@mipmap/ic_launcher"
-            android:layout_toRightOf="@id/iv_watereveryno"
-            android:layout_marginLeft="5dp"/>
+            android:layout_centerHorizontal="true" />
     </RelativeLayout>
 
 </LinearLayout>

@@ -47,11 +47,11 @@
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="35dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
                         android:text="\u2264"
                         android:textSize="80dp" />
                 </RelativeLayout>
@@ -59,7 +59,7 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="50dp">
+                    android:layout_marginLeft="60dp">
                     <EditText
                         android:id="@+id/tv_wateratwater"
                         android:layout_width="wrap_content"
@@ -72,7 +72,7 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="80dp">
+                    android:layout_marginLeft="50dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -90,16 +90,9 @@
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:id="@+id/iv_wateratno"
-            android:src="@mipmap/ic_launcher"
-            android:layout_marginLeft="125dp"/>
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
             android:id="@+id/iv_wateratyes"
-            android:src="@mipmap/ic_launcher"
-            android:layout_toRightOf="@id/iv_wateratno"
-            android:layout_marginLeft="5dp"/>
+            android:layout_centerHorizontal="true"
+            android:src="@mipmap/ic_launcher" />
     </RelativeLayout>
 
     <android.support.v7.widget.CardView
@@ -126,12 +119,12 @@
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="35dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
                         android:text="\u2265"
                         android:textSize="80dp" />
                 </RelativeLayout>
@@ -139,8 +132,7 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center">
-
+                    android:layout_marginLeft="60dp">
                     <EditText
                         android:id="@+id/tv_watereverywater"
                         android:layout_width="wrap_content"
@@ -154,7 +146,7 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="80dp">
+                    android:layout_marginLeft="50dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -172,16 +164,9 @@
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:id="@+id/iv_watereveryno"
-            android:src="@mipmap/ic_launcher"
-            android:layout_marginLeft="125dp"/>
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
             android:id="@+id/iv_watereveryyes"
-            android:src="@mipmap/ic_launcher"
-            android:layout_toRightOf="@id/iv_watereveryno"
-            android:layout_marginLeft="5dp"/>
+            android:layout_centerHorizontal="true"
+            android:src="@mipmap/ic_launcher" />
     </RelativeLayout>
 
 </LinearLayout>
