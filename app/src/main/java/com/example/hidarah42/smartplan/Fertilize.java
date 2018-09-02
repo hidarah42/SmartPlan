@@ -6,6 +6,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
+
+import com.google.gson.Gson;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
@@ -17,13 +21,16 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Fertilize extends Fragment {
 
     static String MQTTHOST = "tcp://broker.hivemq.com:1883";
     static String topikNerima = "avianaPub";
     static String topikKirim = "avianaSub";
     private MqttAndroidClient client;
-    private String clientId, pesan, stringWaterAt, stringWaterEvery;
+    private String clientId, pesan, stringFertilizeAt, stringWaterEvery;
 
     public Fertilize(){}
 
@@ -34,6 +41,8 @@ public class Fertilize extends Fragment {
         clientId = MqttClient.generateClientId();
         client = new MqttAndroidClient(getContext(), MQTTHOST, clientId);
 
+        final EditText fertilizeAt = page.findViewById(R.id.tv_fertilizeatwater);
+        final ImageView imageViewFertilizeAt = page.findViewById(R.id.iv_fertilizeatyes);
 
         //MQTT
         MqttConnectOptions options = new MqttConnectOptions();
@@ -74,6 +83,29 @@ public class Fertilize extends Fragment {
             @Override
             public void deliveryComplete(IMqttDeliveryToken token) {
 
+            }
+        });
+
+        imageViewFertilizeAt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                stringFertilizeAt = fertilizeAt.getText().toString();
+                int fertilizeInt = Integer.valueOf(stringFertilizeAt);
+                Gson gson = new Gson();
+
+                Map<String, Integer> sensor = new HashMap<String, Integer>();
+                sensor.put("param", 7);
+                sensor.put("fertiHour", fertilizeInt);
+                String jsonnya = gson.toJson(sensor);
+                Log.d("Akhir data", jsonnya);
+
+                try {
+                    client.publish(topikKirim, jsonnya.getBytes(), 0, false);
+                    Log.d("Status", "Berhasil " + jsonnya);
+                } catch (MqttException e) {
+                    e.printStackTrace();
+
+                }
             }
         });
 

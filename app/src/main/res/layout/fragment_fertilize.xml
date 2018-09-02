@@ -41,15 +41,15 @@
                 android:text="FERTILIZE PLAN AT:"/>
 
             <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="100dp">
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_gravity="center">
 
                 <EditText
                     android:id="@+id/tv_fertilizeatwater"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="30dp"
                     android:background="@color/Putih"
                     android:inputType="number"
                     android:text="09"
@@ -60,6 +60,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/tv_fertilizeatwater"
                     android:text=":00"
+                    android:textSize="65dp"
                     android:textColor="@color/Hitam" />
             </RelativeLayout>
         </LinearLayout>
