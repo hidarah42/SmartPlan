@@ -3,4 +3,10 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="Hijau">#bcd35f</color>
+    <color name="Hitam">#2d2d2d</color>
+    <color name="AbuAbu">#efefef</color>
+    <color name="AbuAbu2">#a1a1a1</color>
+    <color name="Putih">#ffffff</color>
 </resources>

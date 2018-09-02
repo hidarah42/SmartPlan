@@ -54,6 +54,7 @@
             android:layout_height="wrap_content"
             android:textSize="65dp"
             android:id="@+id/tv_humidityhome"
+
             android:text="78%"
             android:layout_gravity="center"/>
     </LinearLayout>

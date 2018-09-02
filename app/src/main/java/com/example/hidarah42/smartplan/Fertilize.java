@@ -46,13 +46,13 @@ public class Fertilize extends Fragment {
             token.setActionCallback(new IMqttActionListener() {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
-                    Log.d("Status konek", "Status Konek");
+                    Log.d("StatusFertilize", "Status Konek");
 
                 }
 
                 @Override
                 public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                    Log.d("Status konek", "Status Tidak Konek");
+                    Log.d("StatusFertilize", "Status Tidak Konek");
                 }
             });
         } catch (MqttException e) {
@@ -62,7 +62,7 @@ public class Fertilize extends Fragment {
         client.setCallback(new MqttCallback() {
             @Override
             public void connectionLost(Throwable cause) {
-                Log.d("Status konek", "Status Terputus");
+                Log.d("StatusFertilize", "Status Terputus");
             }
 
             @Override

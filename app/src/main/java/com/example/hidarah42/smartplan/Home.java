@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
@@ -17,14 +18,14 @@ import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Home extends Fragment {
 
-    static String MQTTHOST = "tcp://mqtt.dioty.co:1883";
-    static String USERNAME = "lazul.azmi60@gmail.com";
-    static String PASSWORD = "4ef3fc28";
-    static String topik = "/lazul.azmi60@gmail.com/";
-    static String topikAlat = "/lazul.azmi60@gmail.com/manual";
+    static String MQTTHOST = "tcp://broker.hivemq.com:1883";
+    static String topikNerima = "avianaPub";
+    static String topikKirim = "avianaSub";
     private MqttAndroidClient client;
     private String clientId, pesan;
 
@@ -38,23 +39,43 @@ public class Home extends Fragment {
         clientId = MqttClient.generateClientId();
         client = new MqttAndroidClient(getContext(), MQTTHOST, clientId);
 
+        final TextView timeHome = page.findViewById(R.id.tv_timehome);
+        final TextView humadityHome = page.findViewById(R.id.tv_humidityhome);
+
         //MQTT
         MqttConnectOptions options = new MqttConnectOptions();
-        options.setUserName(USERNAME);
-        options.setPassword(PASSWORD.toCharArray());
 
         try {
             IMqttToken token = client.connect(options);
             token.setActionCallback(new IMqttActionListener() {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
-                    Log.d("Status konek", "Status Konek");
+
+                    int qos = 1;
+
+                    try {
+                        IMqttToken subToken = client.subscribe(topikNerima, qos);
+                        subToken.setActionCallback(new IMqttActionListener() {
+                            @Override
+                            public void onSuccess(IMqttToken asyncActionToken) {
+                                Log.d("StatusHome", "Konek berhasil");
+                            }
+
+                            @Override
+                            public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                                Log.d("StatusHome", "Gagal");
+                            }
+                        });
+
+                    } catch (MqttException e) {
+                        e.printStackTrace();
+                    }
 
                 }
 
                 @Override
                 public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                    Log.d("Status konek", "Status Tidak Konek");
+                    Log.d("StatusHome", "GAGAL");
                 }
             });
         } catch (MqttException e) {
@@ -64,16 +85,25 @@ public class Home extends Fragment {
         client.setCallback(new MqttCallback() {
             @Override
             public void connectionLost(Throwable cause) {
-                Log.d("Status konek", "Status Terputus");
+                Log.d("StatusHome", "Status Terputus");
             }
 
             @Override
-            public void messageArrived(String topic, MqttMessage message) {
+            public void messageArrived(String topic, MqttMessage message) throws Exception {
 
-                //Mengambil pesan yang dikirim dari alat dan di log
-                pesan = new String(message.getPayload());
-                Log.d("Status konek", "" + pesan);
+                Log.d("isi pesan", "" + message.toString());
 
+                JSONObject jsonObject = new JSONObject(message.toString());
+                try {
+                    String jam = jsonObject.getString("jam");
+                    String sensor = String.valueOf(jsonObject.getInt("sensor"));
+                    Log.d("Pesan akhir", "" + jam + "," + sensor);
+
+                    timeHome.setText(jam);
+                    humadityHome.setText(sensor + "%");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
