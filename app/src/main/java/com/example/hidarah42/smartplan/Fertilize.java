@@ -19,13 +19,11 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 public class Fertilize extends Fragment {
 
-    static String MQTTHOST = "tcp://mqtt.dioty.co:1883";
-    static String USERNAME = "lazul.azmi60@gmail.com";
-    static String PASSWORD = "4ef3fc28";
-    static String topik = "/lazul.azmi60@gmail.com/";
-    static String topikAlat = "/lazul.azmi60@gmail.com/manual";
+    static String MQTTHOST = "tcp://broker.hivemq.com:1883";
+    static String topikNerima = "avianaPub";
+    static String topikKirim = "avianaSub";
     private MqttAndroidClient client;
-    private String clientId, pesan;
+    private String clientId, pesan, stringWaterAt, stringWaterEvery;
 
     public Fertilize(){}
 
@@ -36,10 +34,9 @@ public class Fertilize extends Fragment {
         clientId = MqttClient.generateClientId();
         client = new MqttAndroidClient(getContext(), MQTTHOST, clientId);
 
+
         //MQTT
         MqttConnectOptions options = new MqttConnectOptions();
-        options.setUserName(USERNAME);
-        options.setPassword(PASSWORD.toCharArray());
 
         try {
             IMqttToken token = client.connect(options);

@@ -96,14 +96,41 @@ public class Water extends Fragment {
                 stringWaterAt = waterAt.getText().toString();
                 int lala = Integer.valueOf(stringWaterAt);
                 Gson gson = new Gson();
-//                String total = "{\"param
-//                Log.d("waterAT",""+lala);
 
                 Map<String, Integer> sensor = new HashMap<String, Integer>();
                 sensor.put("param", 3);
                 sensor.put("wateringH", lala);
                 String jsonnya = gson.toJson(sensor);
                 Log.d("Akhir data", jsonnya);
+
+                try {
+                    client.publish(topikKirim, jsonnya.getBytes(), 0, false);
+                    Log.d("Status", "Berhasil " + jsonnya);
+                } catch (MqttException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        imageViewWaterEvery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                stringWaterEvery = waterEvery.getText().toString();
+                int lala = Integer.valueOf(stringWaterEvery);
+                Gson gson = new Gson();
+
+                Map<String, Integer> sensor = new HashMap<String, Integer>();
+                sensor.put("param", 4);
+                sensor.put("SwateringH", lala);
+                String jsonnya = gson.toJson(sensor);
+                Log.d("Akhir data", jsonnya);
+
+                try {
+                    client.publish(topikKirim, jsonnya.getBytes(), 0, false);
+                    Log.d("Status", "Berhasil " + jsonnya);
+                } catch (MqttException e) {
+                    e.printStackTrace();
+                }
             }
         });
 

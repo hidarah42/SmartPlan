@@ -63,6 +63,7 @@
                         android:id="@+id/tv_wateratwater"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:inputType="number"
                         android:background="@color/Putih"
                         android:text="0"
                         android:textSize="70dp" />
@@ -141,6 +142,7 @@
                         android:id="@+id/tv_watereverywater"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:inputType="number"
                         android:background="@color/Putih"
                         android:text="0"
                         android:textSize="70dp" />
