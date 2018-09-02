@@ -99,8 +99,9 @@ public class Water extends Fragment {
 //                String total = "{\"param
 //                Log.d("waterAT",""+lala);
 
-                Map<String, Integer> sensor = new HashMap<>();
-                sensor.put("sensor", lala);
+                Map<String, Integer> sensor = new HashMap<String, Integer>();
+                sensor.put("param", 3);
+                sensor.put("wateringH", lala);
                 String jsonnya = gson.toJson(sensor);
                 Log.d("Akhir data", jsonnya);
             }
